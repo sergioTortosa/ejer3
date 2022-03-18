@@ -1,16 +1,49 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
+import { Country } from '../../interfaces/pais.interface';
+import { PaisService } from '../../services/pais.service';
 
 @Component({
   selector: 'app-por-region',
   templateUrl: './por-region.component.html',
-  styles: [
+  styles: [ `
+    button {
+      margin-right: 5px;
+
+    }
+    `
   ]
 })
-export class PorRegionComponent implements OnInit {
+export class PorRegionComponent {
 
-  constructor() { }
 
-  ngOnInit(): void {
+  regiones: string[] = [
+    'EU', 
+    'EFTA',
+    'CARICOM',
+    'PA',
+    'AU',
+    'USAN',
+    'EEU', 
+    'AL', 
+    'ASEAN', 
+    'CAIS', 
+    'CEFTA', 
+    'NAFTA', 
+    'SAARC' ];
+  regionActiva: string ='';
+  paises: Country[] = [];
+
+
+  constructor(private PaisService: PaisService) { }
+  activarRegion (region: string) {
+
+    this.regionActiva = region;
+
+    this.PaisService.buscarRegion(region)
+
+      .subscribe(paises => this.paises = paises);
+    
+
   }
 
 }
